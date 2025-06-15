@@ -27,10 +27,7 @@ namespace Demo.Application.Features.GrossWrittenPremium.Queries
                     LineOfBusiness = group.Key,
                     Average = group.Average(g => g.Amount)
                 })
-                .ToDictionaryAsync(
-                g => g.LineOfBusiness,
-                g => g.Average,
-                cancellationToken);
+                .ToDictionaryAsync(g => g.LineOfBusiness, g => g.Average, cancellationToken);
         }
     }
 }
