@@ -16,8 +16,13 @@ namespace Demo.Tests
         {
             List<GrossWrittenPremium> testData = new List<GrossWrittenPremium>
             {
+                new GrossWrittenPremium { Year = 2007, Amount = 200m, LineOfBusiness = LineOfBusiness.Property, Country = Country.Ae },
                 new GrossWrittenPremium { Year = 2008, Amount = 100m, LineOfBusiness = LineOfBusiness.Property, Country = Country.Ae },
-                new GrossWrittenPremium { Year = 2009, Amount = 200m, LineOfBusiness = LineOfBusiness.Property, Country = Country.Ae }
+                new GrossWrittenPremium { Year = 2009, Amount = 200m, LineOfBusiness = LineOfBusiness.Property, Country = Country.Ae },
+                new GrossWrittenPremium { Year = 2016, Amount = 200m, LineOfBusiness = LineOfBusiness.Property, Country = Country.Ae },
+
+                new GrossWrittenPremium { Year = 2015, Amount = 200m, LineOfBusiness = LineOfBusiness.Property, Country = Country.Us },
+                new GrossWrittenPremium { Year = 2015, Amount = 200m, LineOfBusiness = LineOfBusiness.Liability, Country = Country.Ae }
             };
 
             var mockSet = testData.AsQueryable().BuildMockDbSet();
@@ -30,7 +35,7 @@ namespace Demo.Tests
                 Country = Country.Ae,
                 LinesOfBusiness = [ LineOfBusiness.Property ],
                 YearSince = 2008,
-                YearUntil = 2009
+                YearUntil = 2015
             };
 
             var result = await handler.Handle(query, CancellationToken.None);
