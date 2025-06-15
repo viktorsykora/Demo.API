@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices(builder.Configuration, useInMemoryDatabase: true);
+builder.Services.AddInfrastructureServices();
 
 // Add services to the container.
 builder.Services.AddControllers()

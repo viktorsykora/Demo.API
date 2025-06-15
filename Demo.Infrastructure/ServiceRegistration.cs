@@ -1,26 +1,16 @@
 ﻿using Demo.Application.Abstractions;
 using Demo.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Demo.Infrastructure
 {
     public static class ServiceRegistration
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration,
-            bool useInMemoryDatabase)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
-            if (useInMemoryDatabase)
-            {
-                services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseInMemoryDatabase(nameof(ApplicationDbContext)));
-            }
-            /*else
-            {
-                services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
-            }*/
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseInMemoryDatabase(nameof(ApplicationDbContext)));
 
             services.AddTransient<IApplicationDbContext, ApplicationDbContext>();
 
