@@ -18,12 +18,12 @@ namespace Demo.API.Controllers
         }
 
         [HttpPost("avg")]
-        public async Task<Dictionary<LineOfBusiness, decimal>> Average([FromBody] GetAverageGrossWrittenPremiumDto createTodoCommand)
+        public async Task<Dictionary<LineOfBusiness, decimal>> Average([FromBody] GetAverageGrossWrittenPremiumDto requestDto)
         {
             return await _mediator.Send(new GetAveragePerCountryQuery
             {
-                Country = createTodoCommand.Country,
-                LinesOfBusiness = createTodoCommand.Lob,
+                Country = requestDto.Country,
+                LinesOfBusiness = requestDto.Lob,
                 YearSince = 2008,
                 YearUntil = 2015
             });
