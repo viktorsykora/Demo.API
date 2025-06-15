@@ -11,4 +11,4 @@ http://localhost:9091/openapi/openapi.json
 I used clean architecture pattern and I decided to go with CQRS pattern, other option would be service + repository. Imo data extractions like is a good fit for query handlers.
 
 ## TODO
-I planned to go with postgres as a db but had not enought time. I would use postgres docker image + docker compose (+ volumes).
+I planned to go with postgres as a db but had not enought time. I would use postgres docker image + docker compose (+ volumes). And for validation I would use FluentValidation and create validator that Lob array should not be empty.
