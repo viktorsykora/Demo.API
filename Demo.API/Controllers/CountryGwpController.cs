@@ -1,18 +1,32 @@
-﻿using Demo.Shared.Enums;
+﻿using Demo.API.Dtos;
+using Demo.Application.Features.GrossWrittenPremium.Queries;
+using Demo.Shared.Enums;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.API.Controllers
 {
     [ApiController]
-    [Route("server/api/[controller]")]
+    [Route("server/api/gwp")]
     public class CountryGwpController : Controller
     {
-        [HttpPost("avg")]
-        public async Task<Dictionary<LineOfBusiness, decimal>> Average([FromBody] GetAvgDto createTodoCommand)
+        private readonly IMediator _mediator;
+
+        public CountryGwpController(IMediator mediator)
         {
-            //var id = await _mediator.Send(createTodoCommand);
-            //return CreatedAtAction(nameof(GetById), new { id }, createTodoCommand);
-            return null;
+            _mediator = mediator;
+        }
+
+        [HttpPost("avg")]
+        public async Task<Dictionary<LineOfBusiness, decimal>> Average([FromBody] GetAverageGrossWrittenPremiumDto createTodoCommand)
+        {
+            return await _mediator.Send(new GetAveragePerCountryQuery
+            {
+                Country = createTodoCommand.Country,
+                LinesOfBusiness = createTodoCommand.Lob,
+                YearSince = 2008,
+                YearUntil = 2015
+            });
         }
     }
 }
