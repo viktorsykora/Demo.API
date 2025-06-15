@@ -1,7 +1,7 @@
 # Demo.API
 
 ### How to run
-docker build -t demo-api -f Dockerfile .
+docker build -t demo-api -f Dockerfile . <br>
 docker run -p 9091:9091 demo-api
 
 ### Swagger
