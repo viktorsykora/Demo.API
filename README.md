@@ -7,8 +7,6 @@ docker run -p 9091:9091 demo-api
 ### Swagger
 http://localhost:9091/openapi/openapi.json
 
-## Architecture decisions
-I used clean architecture pattern and I decided to go with CQRS pattern, other option would be service + repository. Imo data extractions like is a good fit for query handlers.
-
-## TODO
-I planned to go with postgres as a db but had not enought time. I would use postgres docker image + docker compose (+ volumes). And for validation I would use FluentValidation and create validator that Lob array should not be empty.
+### Improvements
+- For persistence I would use postgres image + docker compose (with volumes).
+- Validations could be improved using FluentValidation.
