@@ -1,10 +1,9 @@
-﻿using Demo.Application.Abstractions;
-using Demo.Domain;
+﻿using Demo.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Demo.Infrastructure.Context
 {
-    public class ApplicationDbContext : DbContext, IApplicationDbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext()
         {

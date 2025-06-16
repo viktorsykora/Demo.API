@@ -1,5 +1,5 @@
 ﻿using Demo.Application.Abstractions;
-using Demo.Application.Features.GrossWrittenPremium.Queries;
+using Demo.Application.Features.GrossWrittenPremium;
 using Demo.Domain;
 using Demo.Shared.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -16,30 +16,22 @@ namespace Demo.Tests
         {
             List<GrossWrittenPremium> testData = new List<GrossWrittenPremium>
             {
-                new GrossWrittenPremium { Year = 2007, Amount = 200m, LineOfBusiness = LineOfBusiness.Property, Country = Country.Ae },
                 new GrossWrittenPremium { Year = 2008, Amount = 100m, LineOfBusiness = LineOfBusiness.Property, Country = Country.Ae },
                 new GrossWrittenPremium { Year = 2009, Amount = 200m, LineOfBusiness = LineOfBusiness.Property, Country = Country.Ae },
-                new GrossWrittenPremium { Year = 2016, Amount = 200m, LineOfBusiness = LineOfBusiness.Property, Country = Country.Ae },
-
-                new GrossWrittenPremium { Year = 2015, Amount = 200m, LineOfBusiness = LineOfBusiness.Property, Country = Country.Us },
-                new GrossWrittenPremium { Year = 2015, Amount = 200m, LineOfBusiness = LineOfBusiness.Liability, Country = Country.Ae }
+                new GrossWrittenPremium { Year = 2009, Amount = 200m, LineOfBusiness = LineOfBusiness.Liability, Country = Country.Ae },                
             };
 
-            var mockSet = testData.AsQueryable().BuildMockDbSet();
-            var mockContext = new Mock<IApplicationDbContext>();
-            mockContext.Setup(x => x.GrossWrittenPremiums).Returns(mockSet.Object);
+            var repositoryMock = new Mock<IGrossWrittenPremiumRepository>();
+            repositoryMock.Setup(x => x.GrossWrittenPremiumsByCountryAndYear(
+                It.IsAny<Country>(),
+                It.IsAny<int>(),
+                It.IsAny<int>(),
+                It.IsAny<LineOfBusiness[]>()))
+                .ReturnsAsync(testData.ToArray());
 
-            var handler = new GetAveragePerCountryQueryHandler(mockContext.Object);
-            var query = new GetAveragePerCountryQuery
-            {
-                Country = Country.Ae,
-                LinesOfBusiness = [ LineOfBusiness.Property ],
-                YearSince = 2008,
-                YearUntil = 2015
-            };
+            var sut = new GrossWrittenPremiumCalculationService(repositoryMock.Object);
+            var result = await sut.GetAveragePerCountry(Country.Ae, new[] { LineOfBusiness.Property }, 2008, 2015);
 
-            var result = await handler.Handle(query, CancellationToken.None);
-            
             Assert.AreEqual(150, result[LineOfBusiness.Property]);
         }
     }

@@ -1,5 +1,5 @@
-﻿using Demo.Application.Features.GrossWrittenPremium.Queries;
-using FluentValidation;
+﻿using Demo.Application.Abstractions;
+using Demo.Application.Features.GrossWrittenPremium;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Demo.Application
@@ -8,8 +8,7 @@ namespace Demo.Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceRegistration).Assembly));
-            services.AddValidatorsFromAssemblyContaining<GetAveragePerCountryQuery>();
+            services.AddTransient<IGrossWrittenPremiumCalculationService, GrossWrittenPremiumCalculationService>();
             return services;
         }
     }

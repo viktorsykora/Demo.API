@@ -1,5 +1,6 @@
 ﻿using Demo.Application.Abstractions;
 using Demo.Infrastructure.Context;
+using Demo.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,7 +13,8 @@ namespace Demo.Infrastructure
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseInMemoryDatabase(nameof(ApplicationDbContext)));
 
-            services.AddTransient<IApplicationDbContext, ApplicationDbContext>();
+            services.AddTransient<ApplicationDbContext>();
+            services.AddTransient<IGrossWrittenPremiumRepository, GrossWrittenPremiumRepository>();
 
             return services;
         }

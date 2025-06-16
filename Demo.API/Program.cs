@@ -1,3 +1,4 @@
+using Demo.API.Middlewares;
 using Demo.Application;
 using Demo.Infrastructure;
 using Demo.Infrastructure.Context;
@@ -31,6 +32,8 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.MapOpenApi("/openapi/openapi.json");
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseAuthorization();
 

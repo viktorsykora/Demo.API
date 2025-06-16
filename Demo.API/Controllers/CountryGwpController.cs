@@ -1,7 +1,6 @@
 ﻿using Demo.API.Dtos;
-using Demo.Application.Features.GrossWrittenPremium.Queries;
+using Demo.Application.Abstractions;
 using Demo.Shared.Enums;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.API.Controllers
@@ -10,23 +9,17 @@ namespace Demo.API.Controllers
     [Route("server/api/gwp")]
     public class CountryGwpController : Controller
     {
-        private readonly IMediator _mediator;
+        private readonly IGrossWrittenPremiumCalculationService _grossWrittenPremiumCalculationService;
 
-        public CountryGwpController(IMediator mediator)
+        public CountryGwpController(IGrossWrittenPremiumCalculationService grossWrittenPremiumCalculationService)
         {
-            _mediator = mediator;
+            _grossWrittenPremiumCalculationService = grossWrittenPremiumCalculationService;
         }
 
         [HttpPost("avg")]
         public async Task<Dictionary<LineOfBusiness, decimal>> Average([FromBody] GetAverageGrossWrittenPremiumDto requestDto)
         {
-            return await _mediator.Send(new GetAveragePerCountryQuery
-            {
-                Country = requestDto.Country,
-                LinesOfBusiness = requestDto.Lob,
-                YearSince = 2008,
-                YearUntil = 2015
-            });
+            return await _grossWrittenPremiumCalculationService.GetAveragePerCountry(requestDto.Country, requestDto.Lob, 2008, 2015);
         }
     }
 }
